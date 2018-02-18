@@ -1,12 +1,13 @@
 # Ignore everything in this directory
 /*
 
-# Ignore folders called 'extra' anywhere in the repo
-/**/extra
-
-# Do not ignore these files
+# except for these files
 !/.gitignore
 !/README.md
+!/index.htm
 
-# Do not ignore these folders
+# and these folders
 !/project*/
+
+# Also, ignore all folders called 'extra' anywhere in the repo
+/**/extra
