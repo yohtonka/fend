@@ -1,0 +1,18 @@
+/*
+ * Credits
+ * -------
+ * I'm using content from the following external sources for this project.
+ */
+ 
+1. Supporting materials provided by Udacity:
+   - "fend-animal-trading-cards-master.zip" (downloaded from course website)
+
+2. Text about wild yaks: 
+   - http://justfunfacts.com/interesting-facts-about-yaks
+
+2. Background image: 
+   - http://www.granitifiandre.es/gres-porcelanico/precious-stones/ambra
+	 
+	(Although, this image is most probably copyrighted, 
+	using it for this project should not be a proble,
+	as it's not being used for a commercial purpose.)
