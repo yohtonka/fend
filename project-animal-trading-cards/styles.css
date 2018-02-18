@@ -1,0 +1,76 @@
+/*
+	Udacity Front-End Web Developer Nanodegree Program
+	Project: Animal Trading Cards
+	@Author Jayanta Gauchan
+	@Date February 18, 2018
+*/
+
+h1 {
+	margin-left: 20px;
+	font-family: 'Fredericka the Great', cursive;
+}
+
+img {
+	margin: 0 20px;
+	width: 300px;
+	border: 1px solid #ccc;
+	border-radius: 10px 10px 0 0;
+}
+
+ul {
+	list-style: none;
+	margin-left: -40px;
+}
+
+p {
+	line-height: 1.5;
+}
+
+/* trading card */
+.card {
+	margin-bottom: 20px;
+	width: 340px;
+	font-family: Arial;
+	font-size: 16px;
+	-webkit-box-shadow: 10px 10px 5px 0px rgba(238,238,238,1);
+	-moz-box-shadow: 10px 10px 5px 0px rgba(238,238,238,1);
+	box-shadow: 10px 10px 5px 0px rgba(238,238,238,1);
+	border: 10px solid #400f04;
+	border-radius: 20px;
+	background: url(bg-texture.jpg) #F9F9F9 bottom right;
+}
+
+/* background of the title (or, animal's name) */
+.title-background {
+	width: 100%;
+	margin: 0 0 15px 0;
+	padding: 5px 0;
+	border-bottom: 1px solid #ccc;
+	border-radius: 10px 10px 0 0;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* main text (information about the animal) */
+.info {
+	margin: 10px 20px 20px 20px;
+	width: 269px;
+	padding: 0 15px;
+	border: 1px solid #ccc;
+	border-radius: 0 0 10px 10px;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* interesting fact about the animal */
+.interesting-fact {
+	font-style: italic;
+}
+
+/* labels for animal's list items */
+.label {
+	font-weight: bold;
+}
+
+/* credit/citation for the text and bg image */
+.hidden {
+	display: none;
+}
