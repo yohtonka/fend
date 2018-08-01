@@ -107,3 +107,13 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.score-panel .timer {
+    margin-left: 40px;
+    padding: 0 10px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    background-color: #e5f3fd;
+    border-radius: 5px;
+}

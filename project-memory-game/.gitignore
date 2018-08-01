@@ -2,3 +2,7 @@
 .htmlhintrc
 .stylelintrc
 .eslintrc.json
+index*.html
+test*.*
+app*.js
+original/
