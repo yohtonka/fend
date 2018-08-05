@@ -19,7 +19,7 @@ The game is responsive and should work in modern desktop, tablet, and phone brow
 
 ## Demo
 
-Play the **[Memory Game]**(https://yohtonka.github.io/fend/project-memory-game/) here:
+Play the **[Memory Game](https://yohtonka.github.io/fend/project-memory-game/)** here:
 [https://yohtonka.github.io/fend/project-memory-game](https://yohtonka.github.io/fend/project-memory-game/)
 
 
@@ -30,7 +30,7 @@ The game uses starter files, containing the basic game elements and their design
 
 ## Contributing
 
-As this project was created as part of my Udacity FEND Nanodegree program, contributions to the project cannot be accepted.
+As this project was created as part of my Udacity FEND Nanodegree course work, contributions to the project cannot be accepted :)
 
 
 ## License
@@ -40,4 +40,4 @@ As this project was created as part of my Udacity FEND Nanodegree program, contr
 
 ## Links
 
- * [Udacity Front-End Web Development Nanodegree program] https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001
+ * [Udacity Front-End Web Development Nanodegree program](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001)
