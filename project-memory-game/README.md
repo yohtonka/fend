@@ -4,7 +4,7 @@
 
 * [About](#about)
 * [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Links](#links)
 
 ## About
 

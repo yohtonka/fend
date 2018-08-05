@@ -5,6 +5,8 @@ const deck = document.querySelector('.deck'); // Deck of cards
 const btnRestart = document.querySelector('.fa-repeat'); // Button to restart the game
 const time = document.querySelector('.time'); // Timer showing elapsed time
 const stars = document.querySelector('.stars'); // Star rating
+const modalBox = document.getElementById('modal-dialog-box'); // Modal dialog box
+const modalMsg = document.getElementById('message'); // Message inside the modal dialog box 
 
 /* Memory game board : */
 let	arrCardSymbols;			// List of all card faces
@@ -13,12 +15,19 @@ let openedUnmatchedCards;	// A list of currently open cards that have not been m
 let totalMatchedCards;		// Total number of cards with matching pairs
 let isCard;					// Flag to denote if a valid card was clicked
 let intMoveCount;			// Counter to keep track of total number of moves (or, clicks)
+let strMsg;					// Text message to show in the modal dialog box
+//let isStartGame;			// Flag to denote if the player wants to start a new game
 /* Timer: */
 let timer;					// Variable to store the returned ID from setInterval() function
 let startTime;				// Time when the game started
 let seconds;				// Number of seconds on the game timer
 let minutes;				// Number of minutes on the game timer
+/* Star rating */
 let starRating;				// Player's star rating based on their performance
+/* Modal Dialog Box */
+let isCardEventListener;	// Flag to denote if the cards in the deck already have an event listener
+let isResetButtonEventListener; // Flag to denote if the reset button already has an event listener 
+
 
 /*
  * Initialize the game when the document is ready 
@@ -26,20 +35,103 @@ let starRating;				// Player's star rating based on their performance
  */
 window.onload = function() {
 
-	// Initialize the game
-	initializeMemoryGame();
-
-	/* 
-	 * Add all the event listeners necessary for the game
-	 * E.g. Add 'click' events to all cards in the deck and to the reset button 
-	 */ 
-	addGameEventListeners();
+	// Initialize the card- and reset button event listeners to false
+	// to denote that they haven't been added yet
+	isCardEventListener = false;
+	isResetButtonEventListener = false;
 
 
 	// Show the intro message box with game instructions and a 'Start' button
-	alert('Memory Game \n------------ \n\nClick "Ok" to start the game!');
+	strMsg = '<h1>Memory Game</h1>';
+	strMsg += '<p>This well-known game tests how good your memory is!</p>';
+	strMsg += '<p>It is played by <strong>clicking on any two cards</strong> to reveal the ';
+	strMsg += '<strong>symbols</strong> underneath them. If the cards <strong>match</strong>, ';
+	strMsg += 'they remain <strong>open</strong>. Otherwise, they are turned face-down again.</p>';
+	strMsg += '<p>You <strong>win the game</strong> by <strong>matching all cards!</strong></p>';
+	strMsg += '<h3>Click "Start" to play the game!</h3>';
+	strMsg += '<a href="javascript:hideModalBox(\'start\')" class="button">Start</a> ';
+	strMsg += '<a href="javascript:hideModalBox(\'cancel\')" class="button">Cancel</a>';
+	
+	showModalBox(strMsg);
 };
 
+
+/* Function to display the modal dialog box 
+ * @param strMsg the message or content of the modal box
+ */
+function showModalBox(strMsg){
+
+	// Set the message (i.e. content) of the modal box
+	modalMsg.innerHTML = strMsg;
+
+	// Show the modal dialog box
+	modalBox.style.visibility = 'visible';
+}
+
+
+/* Function to hide the modal dialog box
+ * 
+ * This function is called when buttons in the modal dialog box are clicked
+ * For e.g. there are buttons to start or to restart a game, and to cancel the modal box
+ *
+ * Based on the button that was clicked, a parameter is also passed in the function, and
+ * based on the parameter, event listeners are added to the cards and the reset button
+*/
+function hideModalBox(strAction){
+
+	// Hide the modal dialog box
+	modalBox.style.visibility = 'hidden';
+
+	// Add the game's event listeners by passing the 
+	addGameEventListeners(strAction);
+}
+
+/* Function to add event listeners to the game elements
+ * E.g. All cards in the deck and the reset button have 'click' event listeners
+ *
+ * This fuction is called from within the hideModalBox(arg) function above
+ */
+function addGameEventListeners(strAction) {
+
+	// For debugging purpose:
+	console.log("Player action = " + strAction);
+
+	// Check if any button other than the Cancel button was clicked
+	if (strAction !== 'cancel' && strAction !== undefined && strAction !== '') {
+
+		// No, the Cancel button was not pressed
+		// i.e. either the 'Start' or 'Restart' button was pressed
+		// Then, iniitialize the game
+		initializeMemoryGame();
+
+
+		// Check if the Start button on the welcome screen was clicked, or
+		// if the cards don't have a click event listener yet (i.e. isCardEventListener = false)
+		if (strAction == 'start' || !isCardEventListener) {
+
+			// Add the 'click' event listener to the cards
+			addCardEventListener();
+
+			// Set the flag to true to denote that it has been added
+			isCardEventListener = true;
+
+			console.log('Adding the card event listener')
+		}
+	} 
+
+	// Check if the reset button event listener has already been added
+	if (!isResetButtonEventListener) {
+
+		// No, it has not been added yet
+		// Then, add the 'click' event listener to the reset button
+		addResetButtonEventListener();
+
+		// Set the flag to true to denote that it has been added
+		isResetButtonEventListener = true;
+
+		console.log('Adding the reset button event listener')
+	}
+}
 
 /* Initialize the memory card board with randomly placed cards
  * Shuffle the card symbols (faces/suits) randomly, and set them to the cards in the deck 
@@ -89,9 +181,8 @@ function initializeArray(arr) {
 
 		// The variable has already been initialized as an array
 		// Empty the array
-		// ToDo: Check if this is the most efficient way to empty an Array?
-		while (arr.length > 0){
-			arr.pop();
+		if (arr.length > 0) {
+			arr.splice(0, arr.length);
 		}
 
 	} else {
@@ -119,7 +210,7 @@ function shuffleCards() {
 		deck.children[i].innerHTML = '<i class="fa '+ arrCardSymbols[i] +'"></i>';
 
 		//For Debugging purpose
-		sendToConsole (deck.children[i]);
+		console.log(deck.children[i]);
 
 		/* Turn the card face-down, if it is facing up */
 		// Remove the 'match' class in the card, if it exists
@@ -139,7 +230,7 @@ function shuffleCards() {
 	}
 
 	// Display a success message in the console
-	sendToConsole ('Finished shuffling the cards');
+	console.log('Finished shuffling the cards');
 }
 
 
@@ -158,14 +249,6 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-
-/* Function to log a message to the browser console
- * Used mostly for debugging purposes
- */
-function sendToConsole(strMsg) {
-	console.log(strMsg);
 }
 
 
@@ -260,6 +343,7 @@ function setMoveCount(intCount) {
 	document.querySelector('.moves').textContent = intCount;
 }
 
+
 /* Function to get the total move count */
 function getMoveCount() {
 	return intMoveCount;
@@ -278,6 +362,7 @@ function setTimer() {
 	timer = setInterval(setTime, 1000);
 }
 
+
 /* The main function to set the timer */
 function setTime() {
 
@@ -294,16 +379,15 @@ function setTime() {
 	seconds %= 60;
 
 	// Display the time elapsed since the start of the game as 'Minutes:Seconds' pair
-	time.innerHTML = addZero(minutes) + ':' + addZero(seconds);
+	time.innerHTML = addZeroPrefix(minutes) + ':' + addZeroPrefix(seconds);
 }
 
+
 /* Function to add a zero infront of a number if it is less than 0 */
-function addZero(intTime) {
-	if (intTime < 10) {
-		return '0' + intTime;
-	}
-	return intTime;
+function addZeroPrefix(intTime) {
+	return (intTime < 10) ? ('0' + intTime) : intTime;
 }
+
 
 /* Function to get the total time taken by the player to complete the game
  * E.g. if the time is 00:35, the output becomes "35 seconds"
@@ -325,6 +409,9 @@ function getTime() {
 	}
 
 	// 'seconds' is also a global variable
+	/* Repeating code: similar to the check for minutes 
+	 * Could be made into a function, but it's not necessary for this case
+	 */
 	if (seconds > 0) {
 		msg += seconds + ' second';
 		msg += (seconds > 1) ? 's' : '';
@@ -360,6 +447,7 @@ function initializeStarRating() {
 	}
 }
 
+
 /* Function to remove a star from the star rating in the score board */
 function removeStar() {
 	// Decrease the player's star by 1 
@@ -367,8 +455,10 @@ function removeStar() {
 	starRating--;
 
 	// Revove a star from the score board
+	// ToDo: Instead of removing the stars entirely, replace them with stars with an outline
 	stars.removeChild(stars.lastChild);
 }
+
 
 /* Function to get the player's star rating as a string output */
 function getStarRating() {
@@ -383,18 +473,21 @@ function getStarRating() {
 	return msg;
 }
 
-/* Function to add event listeners to the memory game elements 
- */
-function addGameEventListeners() {
 
-	/* 1. Add a click event to the deck of cards
-	 * -----------------------------------------
-	 *	When a card is clicked, it is flipped around to reveal the card face (symbol)
-	 *		If the card face matches that of another card that is already open, 
-	 *			they are marked as 'matched', and remain open
-	 *		If the card faces do not match, both the cards are turned face-down again
-	 *	When all cards have been matched, the game is won.
-	 */
+/* 
+ * Functions to add event listeners to the memory game elements 
+ */
+/* 1. Add a click event listener to the deck of cards
+ * --------------------------------------------------
+ *	When a card is clicked, it is flipped around to reveal the card face (symbol)
+ *		If the card face matches that of another card that is already open, 
+ *			they are marked as 'matched', and remain open
+ *		If the card faces do not match, both the cards are turned face-down again
+ *	When all cards have been matched, the game is won.
+ */
+function addCardEventListener() {
+
+	// Add the event listener
 	deck.addEventListener('click', function(e) {
 		
 		/* 
@@ -505,71 +598,58 @@ function addGameEventListeners() {
 							// Yes! We have a winner!
 							// Then, stop the timer
 							clearInterval(timer);
-							// Calculate the time taken to complete the game
-							// Subtract new time from the start time
 
 							//Show a box with congratulatory msg, and an option to start a new game
 							// ToDo: put this in a function!
-							const msg = 'Congratulations!!! \n-----------------------\n\nYou completed the game in ' + getTime() + '. It took you ' + getMoveCount() + ' moves, and you received ' + getStarRating() + '! \n\nDo you want to start a new game?';
+							strMsg = '<h1>Congratulations!</h1>';
+							strMsg += 'You completed the game in <strong>' + getTime() + '</strong>.<br />';
+							strMsg += 'It took you <strong>' + getMoveCount() + ' moves</strong>, and you received <strong>' + getStarRating() + '</strong>!<br /><br />';
+							strMsg += '<h3>Do you want to start a new game?</h3>';
+							strMsg += '<a href="javascript:hideModalBox(\'restart\')" class="button">Yes</a> ';
+							strMsg += '<a href="javascript:hideModalBox()" class="button">No</a>';
 
-							// If the player wants to play a new game
-							if (confirm(msg)) {
-								sendToConsole("We have a winner! The player wants to play a new game. Initializing game!")
-
-								// Re-initialize the game
-								initializeMemoryGame();
-							}
+							// Display the modal dialog box with the message
+							showModalBox(strMsg);
 						}
 					}
 				}
 			} 
 		}
 	});
+}
 
 
-	/* 2. Add a click event to the reset button
-	 * -----------------------------------------
-	 *	When the reset button is clicked, a pop-up message is displayed 
-	 *		asking the player if they want to reset the game.
-	 *	If they chose to reset the game, a new game is initialized.
-	 */
-	btnRestart.addEventListener('click', function(){ 
+/* 2. Add a click event listener to the reset button
+ * -------------------------------------------------
+ *	When the reset button is clicked, a pop-up message is displayed 
+ *		asking the player if they want to reset the game.
+ *	If they chose to reset the game, a new game is initialized.
+ */
+ function addResetButtonEventListener() {
+
+ 	// Add the event listener
+	btnRestart.addEventListener('click', function() {
+
+		strMsg = '<h3>Are you sure you want to restart the game?</h3>';
+		strMsg += '<a href="javascript:hideModalBox(\'restart\')" class="button">Yes, please!</a> ';
+		strMsg += '<a href="javascript:hideModalBox()" class="button">No, thanks!</a>';
 		
-		const msg = "Are you sure you want to restart the game?";
-
-		if (confirm(msg)) {
-			
-			sendToConsole("The player reset the game. Re-initializing!")
-
-			// Re-initialize the game
-			initializeMemoryGame();
-		}
+		showModalBox(strMsg)		
 	});
 }
 
 
 /* ToDo:
  -------
-1. Modal pop-up boxes:
-   1. Start of game (with game instructions and 'Start' and 'Cancel' buttons)
-   2. Congratulations popup: Congratulatory message with a button to start another game (cancel button)
-   	  - Also show the time taken and star rating (possibly also, no. of moves)
-2. The web site should be responsive
+1. The web site should be responsive
 	- All application components are usable across modern desktop, tablet, and phone browsers
-3. README file
+2. README file
 	- A README file is included detailing the game and all dependencies
-4. ToDos inside the code itself. Check the comments
-5. Optional additional features (see the project rubric on course website)
+3. ToDos inside the code itself. Check the comments
+4. Optional additional features (see the project rubric on course website)
 
 Bugs:
 -----
-1. The very last matched card is not displayed!
-   - The congratulatory message is shown, but the card is still not displayed.
-   - It is shown, only when the player chooses not to continue with a new game!
-   - Also, the last move is not updated in the score board 
-   		(although, it is correctly shown in the congratulatory message)
-
-2. Can open multiple cards when clicked quickly. 
+1. Can open multiple cards when clicked quickly. 
 	- The player should be able to open only two cards at any time, no matter how quicklky they click multiple cards!
-
  */
