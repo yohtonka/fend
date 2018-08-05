@@ -641,10 +641,6 @@ function addCardEventListener() {
 
 /* ToDo:
  -------
-1. The web site should be responsive
-	- All application components are usable across modern desktop, tablet, and phone browsers
-2. README file
-	- A README file is included detailing the game and all dependencies
 3. ToDos inside the code itself. Check the comments
 4. Optional additional features (see the project rubric on course website)
 

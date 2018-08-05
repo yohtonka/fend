@@ -1,16 +1,7 @@
 # Memory Game Project
 
-## Table of Contents
+Memory game is a very popular card matching game that tests your memory skills. This browser-based game was developed as part of the Udacity Front-end Nanodegree program.
 
-* [About](#about)
-* [Instructions](#instructions)
-* [Links](#links)
-
-## About
-
-Memory game is a very popular card matching game that tests your memory skills.
-
-This browser-based game was developed as part of the Udacity Front-end Nanodegree program.
 
 ## Instructions
 
@@ -18,6 +9,35 @@ Click on any two cards on the game board to turn them face-up to reveal their sy
 
 You win the game by matching all the cards on the game board.
 
+
+## Implementation
+
+The game has been developed using **HTML5**, **CSS3**, and vanilla **Javascript**. No frameworks or libraries were used. 
+
+The game is responsive and should work in modern desktop, tablet, and phone browsers, including IE9 and later.
+
+
+## Demo
+
+Play the **[Memory Game]**(https://yohtonka.github.io/fend/project-memory-game/) here:
+[https://yohtonka.github.io/fend/project-memory-game](https://yohtonka.github.io/fend/project-memory-game/)
+
+
+## Credits
+
+The game uses starter files, containing the basic game elements and their design, provided by Udacity. It also uses some external javascript functions, which have been credited accordingly in the source code.
+
+
+## Contributing
+
+As this project was created as part of my Udacity FEND Nanodegree program, contributions to the project cannot be accepted.
+
+
+## License
+
+**Memory Game** is released under the [MIT License](https://opensource.org/licenses/MIT).
+
+
 ## Links
- 
+
  * [Udacity Front-End Web Development Nanodegree program] https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001
