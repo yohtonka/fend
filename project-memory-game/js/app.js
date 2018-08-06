@@ -1,4 +1,4 @@
-/* 
+/*
  * Declare variables
  */
 const deck = document.querySelector('.deck'); // Deck of cards
@@ -6,10 +6,10 @@ const btnRestart = document.querySelector('.fa-repeat'); // Button to restart th
 const time = document.querySelector('.time'); // Timer showing elapsed time
 const stars = document.querySelector('.stars'); // Star rating
 const modalBox = document.getElementById('modal-dialog-box'); // Modal dialog box
-const modalMsg = document.getElementById('message'); // Message inside the modal dialog box 
+const modalMsg = document.getElementById('message'); // Message inside the modal dialog box
 
 /* Memory game board : */
-let	arrCardSymbols;			// List of all card faces
+let arrCardSymbols;			// List of all card faces (or symbols or suits)
 let card;					// The currently selected card
 let openedUnmatchedCards;	// A list of currently open cards that have not been matched yet
 let totalMatchedCards;		// Total number of cards with matching pairs
@@ -26,11 +26,11 @@ let minutes;				// Number of minutes on the game timer
 let starRating;				// Player's star rating based on their performance
 /* Modal Dialog Box */
 let isCardEventListener;	// Flag to denote if the cards in the deck already have an event listener
-let isResetButtonEventListener; // Flag to denote if the reset button already has an event listener 
+let isResetButtonEventListener; // Flag to denote if the reset button already has an event listener
 
 
 /*
- * Initialize the game when the document is ready 
+ * Initialize the game when the document is ready
  * i.e. when the page has finished loading
  */
 window.onload = function() {
@@ -51,12 +51,12 @@ window.onload = function() {
 	strMsg += '<h3>Click "Start" to play the game!</h3>';
 	strMsg += '<a href="javascript:hideModalBox(\'start\')" class="button">Start</a> ';
 	strMsg += '<a href="javascript:hideModalBox(\'cancel\')" class="button">Cancel</a>';
-	
+
 	showModalBox(strMsg);
 };
 
 
-/* Function to display the modal dialog box 
+/* Function to display the modal dialog box
  * @param strMsg the message or content of the modal box
  */
 function showModalBox(strMsg){
@@ -70,7 +70,7 @@ function showModalBox(strMsg){
 
 
 /* Function to hide the modal dialog box
- * 
+ *
  * This function is called when buttons in the modal dialog box are clicked
  * For e.g. there are buttons to start or to restart a game, and to cancel the modal box
  *
@@ -82,7 +82,7 @@ function hideModalBox(strAction){
 	// Hide the modal dialog box
 	modalBox.style.visibility = 'hidden';
 
-	// Add the game's event listeners by passing the 
+	// Add the game's event listeners by passing the
 	addGameEventListeners(strAction);
 }
 
@@ -117,7 +117,7 @@ function addGameEventListeners(strAction) {
 
 			console.log('Adding the card event listener')
 		}
-	} 
+	}
 
 	// Check if the reset button event listener has already been added
 	if (!isResetButtonEventListener) {
@@ -134,43 +134,43 @@ function addGameEventListeners(strAction) {
 }
 
 /* Initialize the memory card board with randomly placed cards
- * Shuffle the card symbols (faces/suits) randomly, and set them to the cards in the deck 
+ * Shuffle the card symbols (faces/suits) randomly, and set them to the cards in the deck
  */
 function initializeMemoryGame() {
-	
+
 	/*
 	 * Initialize variables
 	 */
 	/* Memory game board: */
-	arrCardSymbols = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bicycle', 'fa-diamond', 'fa-bomb', 'fa-leaf', 'fa-bomb', 'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube'];
+	arrCardSymbols = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'];
 	openedUnmatchedCards = initializeArray(openedUnmatchedCards);
 	totalMatchedCards = 0;
 	intMoveCount = 0;
 	starRating = 3;	// When the game starts, the player receives 3 star ratings (highest rating)
 
-	/* 
+	/*
 	 * Reset the memory game board with randomly placed cards
 	 */
 	shuffleCards();
-	
-	/* 
+
+	/*
 	 * Set/reset the moves (clicks) made by the player
 	 */
 	setMoveCount(intMoveCount);
 
-	/* 
+	/*
 	 * Set/reset the timer
 	 */
 	setTimer();
 
-	/* 
+	/*
 	 * Initialize the star rating
 	 */
 	initializeStarRating();
 }
 
 
-/* Initialize an array variable 
+/* Initialize an array variable
  * If the variable is undefined, initialize it as a blank array
  * If it has already been initialized as an array, empty it
  */
@@ -201,13 +201,14 @@ function initializeArray(arr) {
  * Assigns randomly shuffled symbols to the cards in the deck
  */
 function shuffleCards() {
-	
+
 	// Shuffle the card symbols
-	arrCardSymbols = shuffle(arrCardSymbols);
+	// We need two of each card, so the card symbols are duplicated using the concat() function
+	arrCardSymbols = shuffle(arrCardSymbols.concat(arrCardSymbols));
 
 	// Set the cards with randomized symbols
 	for(let i = 0; i < deck.children.length; i++) {
-		deck.children[i].innerHTML = '<i class="fa '+ arrCardSymbols[i] +'"></i>';
+		deck.children[i].innerHTML = `<i class="fa ${arrCardSymbols[i]}"></i>`;
 
 		//For Debugging purpose
 		console.log(deck.children[i]);
@@ -238,7 +239,7 @@ function shuffleCards() {
  * Shuffle function from http://stackoverflow.com/a/2450976
  */
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -252,7 +253,7 @@ function shuffle(array) {
 }
 
 
-/* Function to check if a card (<li> element) contains a css class	
+/* Function to check if a card (<li> element) contains a css class
  * This is a polyfill for IE 9 and earlier
  * Source: https://www.w3schools.com/jsref/prop_element_classlist.asp
  */
@@ -277,7 +278,7 @@ function containsClass(currentCard, cssClass) {
 function toggleCard(currentCard) {
 
 	// The 'open' and 'show' classes, in combination, display or hide a card
-	// depending on whether it is already open or hidden 
+	// depending on whether it is already open or hidden
 	toggleCardWithClass(currentCard, 'open');
 	toggleCardWithClass(currentCard, 'show');
 }
@@ -289,12 +290,12 @@ function toggleCard(currentCard) {
  * Source: https://www.w3schools.com/jsref/prop_element_classlist.asp
  */
 function toggleCardWithClass(currentCard, cssClass) {
-	
+
 	let arrClasses, intIndex;
 
 	// Check if the browser supports <element>.classList property
 	if (currentCard.classList) {
-		
+
 		// Yes, it is supported. Call the 'toggle' function on classList
 		currentCard.classList.toggle(cssClass);
 
@@ -308,11 +309,11 @@ function toggleCardWithClass(currentCard, cssClass) {
 		if (intIndex >= 0) {
 			// The card contains the class. So, remove it
 			arrClasses.splice(intIndex, 1);
-		} else { 
+		} else {
 			// The card does not contain the class. So, add it
 			arrClasses.push(cssClass);
 		}
-		
+
 		// Regenerate the card's classes
 		currentCard.className = arrClasses.join(' ');
 	}
@@ -350,8 +351,8 @@ function getMoveCount() {
 }
 
 
-/* 
- * Timer 
+/*
+ * Timer
  */
 /* Function to set the timer when the game initializes */
 function setTimer() {
@@ -409,7 +410,7 @@ function getTime() {
 	}
 
 	// 'seconds' is also a global variable
-	/* Repeating code: similar to the check for minutes 
+	/* Repeating code: similar to the check for minutes
 	 * Could be made into a function, but it's not necessary for this case
 	 */
 	if (seconds > 0) {
@@ -441,7 +442,7 @@ function initializeStarRating() {
 		// Create a star
 		star = document.createElement('LI')
 		star.innerHTML = '<i class="fa fa-star"></i>';
-		
+
 		// Add the star to the score board
 		stars.appendChild(star);
 	}
@@ -450,7 +451,7 @@ function initializeStarRating() {
 
 /* Function to remove a star from the star rating in the score board */
 function removeStar() {
-	// Decrease the player's star by 1 
+	// Decrease the player's star by 1
 	// starRating is a global variable
 	starRating--;
 
@@ -474,13 +475,13 @@ function getStarRating() {
 }
 
 
-/* 
- * Functions to add event listeners to the memory game elements 
+/*
+ * Functions to add event listeners to the memory game elements
  */
 /* 1. Add a click event listener to the deck of cards
  * --------------------------------------------------
  *	When a card is clicked, it is flipped around to reveal the card face (symbol)
- *		If the card face matches that of another card that is already open, 
+ *		If the card face matches that of another card that is already open,
  *			they are marked as 'matched', and remain open
  *		If the card faces do not match, both the cards are turned face-down again
  *	When all cards have been matched, the game is won.
@@ -489,40 +490,41 @@ function addCardEventListener() {
 
 	// Add the event listener
 	deck.addEventListener('click', function(e) {
-		
-		/* 
-		 * Check if a valid card (i.e. an <li> element) inside the deck was clicked 
+
+		/*
+		 * Check if a valid card (i.e. an <li> element) inside the deck was clicked
 		 */
 		if (e.target.parentNode.nodeName == 'LI') {
-			
+
 			// A card symbol inside a card (and not the card itself) was clicked!
 			// Assign the parent node (i.e. the <li> element) of the symbol as the 'clicked' card
 			card = e.target.parentNode;
 			isCard = true;
 
 		} else if (e.target.nodeName == 'UL') {
-			
+
 			// The space between and around the cards was clicked
 			// So, it is an invalid click
 			isCard = false;
 
 		} else {
-			
+
 			// An actual card (<li> element) inside the deck was clicked
 			// Assign it as the currently selected (clicked) card
 			card = e.target;
 			isCard = true;
 		}
-		
 
-		/* Check if a valid card was clicked, and if it has not already been marked as 'matched'
-		 * If it is not a valid card, do nothing, and wait for the player to click another card.
+
+		/* Check if a valid card was clicked, and if the card has already been shown (ie. it is face-up), or
+		 * 		if it has already been 'matched' (i.e. a matching pair has already been found)
+		 * If it is not a "valid" card, do nothing, and wait for the player to click another card.
 		 */
-		if (isCard && !containsClass(card, 'match')) {
+		if (isCard && !containsClass(card, 'match') && !containsClass(card, 'open')) {
 
 			// A valid card was clicked!
 
-			/* Move Counter: 
+			/* Move Counter:
 			 * Increase the move counter and update the score board
 			 */
 			intMoveCount++;
@@ -543,77 +545,65 @@ function addCardEventListener() {
 				// Then, show the card
 				toggleCard(card);
 
-				// Add it to the list of opened and unmatched cards	
+				// Add it to the list of opened and unmatched cards
 				openedUnmatchedCards.push(card);
 
-				//alert("Count opened cards: " + openedUnmatchedCards.length);
 			} else {
 
 				// Yes, there is another open card that hasn't been matched yet
-				// Then, check if the player clicked on the same exact open card
-				if (card === openedUnmatchedCards[0]) {
+				// Since we know the player didn't click on the same card twice,
+				// 	 we do not need to check for this. We can be certain it's a different card
 
-					// Yes, it is the same exact card!
-					// Then, simply hide it
-					toggleCard(card);
-					
-					// Remove the card from the list of opened (unmatched) cards
+				// So, show the card
+				toggleCard(card);
+
+				// Check if the two cards match
+				if (card.innerHTML != openedUnmatchedCards[0].innerHTML) {
+
+					// No, they do not match
+					// Then, hide both the cards
+					/* ToDo: parameters in setTimeout() function is not supported in IE9
+					 * and earlier versions. Need to find another way to do the same.
+					 */
+					setTimeout(toggleCard, 500, card);
+					setTimeout(toggleCard, 500, openedUnmatchedCards[0]);
+
+					// Remove the other opened card from the list
 					openedUnmatchedCards.pop();
 
 				} else {
-					
-					// No, it is a different card
-					// Then, show the card
-					toggleCard(card);
 
-					// Check if the two cards match
-					if (card.innerHTML != openedUnmatchedCards[0].innerHTML) {
-						
-						// No, they do not match
-						// Then, hide both the cards
-						/* ToDo: parameters in setTimeout() function is not supported in IE9
-						 * and earlier versions. Need to find another way to do the same.
-						 */
-						setTimeout(toggleCard, 500, card);
-						setTimeout(toggleCard, 500, openedUnmatchedCards[0]);
+					// Yes, the two cards match!
+					// Mark them as matched
+					setMatchedCards(card, openedUnmatchedCards[0]);
 
-						// Remove the other opened card from the list
-						openedUnmatchedCards.pop();
+					// Remove the previous card from the list of opened cards
+					openedUnmatchedCards.pop();
 
-					} else {
+					// Increase the count of total matched cards
+					totalMatchedCards += 2;
 
-						// Yes, the two cards match!
-						// Mark them as matched
-						setMatchedCards(card, openedUnmatchedCards[0]);
+					// Are all the cards matched?
+					if (totalMatchedCards == 16) {
 
-						// Remove the previous card from the list of opened cards
-						openedUnmatchedCards.pop();
+						// Yes! We have a winner!
+						// Then, stop the timer
+						clearInterval(timer);
 
-						// Increase the count of total matched cards
-						totalMatchedCards += 2;
+						//Show a box with congratulatory msg, and an option to start a new game
+						// ToDo: put this in a function!
+						strMsg = '<h1>Congratulations!</h1>';
+						strMsg += 'You completed the game in <strong>' + getTime() + '</strong>.<br />';
+						strMsg += 'It took you <strong>' + getMoveCount() + ' moves</strong>, and you received <strong>' + getStarRating() + '</strong>!<br /><br />';
+						strMsg += '<h3>Do you want to start a new game?</h3>';
+						strMsg += '<a href="javascript:hideModalBox(\'restart\')" class="button">Yes</a> ';
+						strMsg += '<a href="javascript:hideModalBox()" class="button">No</a>';
 
-						// Are all the cards matched?
-						if (totalMatchedCards == 16) {
-
-							// Yes! We have a winner!
-							// Then, stop the timer
-							clearInterval(timer);
-
-							//Show a box with congratulatory msg, and an option to start a new game
-							// ToDo: put this in a function!
-							strMsg = '<h1>Congratulations!</h1>';
-							strMsg += 'You completed the game in <strong>' + getTime() + '</strong>.<br />';
-							strMsg += 'It took you <strong>' + getMoveCount() + ' moves</strong>, and you received <strong>' + getStarRating() + '</strong>!<br /><br />';
-							strMsg += '<h3>Do you want to start a new game?</h3>';
-							strMsg += '<a href="javascript:hideModalBox(\'restart\')" class="button">Yes</a> ';
-							strMsg += '<a href="javascript:hideModalBox()" class="button">No</a>';
-
-							// Display the modal dialog box with the message
-							showModalBox(strMsg);
-						}
+						// Display the modal dialog box with the message
+						showModalBox(strMsg);
 					}
 				}
-			} 
+			}
 		}
 	});
 }
@@ -621,7 +611,7 @@ function addCardEventListener() {
 
 /* 2. Add a click event listener to the reset button
  * -------------------------------------------------
- *	When the reset button is clicked, a pop-up message is displayed 
+ *	When the reset button is clicked, a pop-up message is displayed
  *		asking the player if they want to reset the game.
  *	If they chose to reset the game, a new game is initialized.
  */
@@ -633,19 +623,7 @@ function addCardEventListener() {
 		strMsg = '<h3>Are you sure you want to restart the game?</h3>';
 		strMsg += '<a href="javascript:hideModalBox(\'restart\')" class="button">Yes, please!</a> ';
 		strMsg += '<a href="javascript:hideModalBox()" class="button">No, thanks!</a>';
-		
-		showModalBox(strMsg)		
+
+		showModalBox(strMsg)
 	});
 }
-
-
-/* ToDo:
- -------
-3. ToDos inside the code itself. Check the comments
-4. Optional additional features (see the project rubric on course website)
-
-Bugs:
------
-1. Can open multiple cards when clicked quickly. 
-	- The player should be able to open only two cards at any time, no matter how quicklky they click multiple cards!
- */
