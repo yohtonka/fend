@@ -82,7 +82,7 @@ function hideModalBox(strAction){
 	// Hide the modal dialog box
 	modalBox.style.visibility = 'hidden';
 
-	// Add the game's event listeners by passing the
+	// Add the game's event listeners by passing the player's action in the argument
 	addGameEventListeners(strAction);
 }
 

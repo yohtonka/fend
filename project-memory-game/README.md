@@ -12,7 +12,7 @@ You win the game by matching all the cards on the game board.
 
 ## Implementation
 
-The game has been developed using **HTML5**, **CSS3**, and vanilla **Javascript**. No frameworks or libraries were used. 
+The game has been developed using **HTML5**, **CSS3**, and vanilla **Javascript**. No frameworks or libraries were used.
 
 The game is responsive and should work in modern desktop, tablet, and phone browsers, including IE9 and later.
 
@@ -22,6 +22,22 @@ The game is responsive and should work in modern desktop, tablet, and phone brow
 Play the **[Memory Game](https://yohtonka.github.io/fend/project-memory-game/)** here:
 [https://yohtonka.github.io/fend/project-memory-game](https://yohtonka.github.io/fend/project-memory-game/)
 
+
+## Download the Game
+
+To play the game offline on your laptop, you can:
+
+ Clone the project on GitHub by running the following command on Git Bash
+
+```
+git clone https://github.com/yohtonka/fend.git
+```
+
+2. Download the zip file from GitHub
+
+On GitHub, go to the project's main repository page: [https://github.com/yohtonka/fend](https://github.com/yohtonka/fend)
+
+Click the green button that says "Clone or download", and click on the "Download ZIP" link.
 
 ## Credits
 
