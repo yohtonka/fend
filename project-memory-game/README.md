@@ -27,13 +27,13 @@ Play the **[Memory Game](https://yohtonka.github.io/fend/project-memory-game/)**
 
 To play the game offline on your laptop, you can:
 
- Clone the project on GitHub by running the following command on Git Bash
+<strong>1. Clone the project on GitHub by running the following command on Git Bash</strong>
 
 ```
 git clone https://github.com/yohtonka/fend.git
 ```
 
-2. Download the zip file from GitHub
+<strong>2. Download the zip file from GitHub</strong>
 
 On GitHub, go to the project's main repository page: [https://github.com/yohtonka/fend](https://github.com/yohtonka/fend)
 
