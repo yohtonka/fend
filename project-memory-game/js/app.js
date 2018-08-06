@@ -5,8 +5,8 @@ const deck = document.querySelector('.deck'); // Deck of cards
 const btnRestart = document.querySelector('.fa-repeat'); // Button to restart the game
 const time = document.querySelector('.time'); // Timer showing elapsed time
 const stars = document.querySelector('.stars'); // Star rating
-const modalBox = document.getElementById('modal-dialog-box'); // Modal dialog box
-const modalMsg = document.getElementById('message'); // Message inside the modal dialog box
+const modalBox = document.querySelector('.modal-dialog-box'); // Modal dialog box
+const modalMsg = document.querySelector('.message'); // Message inside the modal dialog box
 
 /* Memory game board : */
 let arrCardSymbols;			// List of all card faces (or symbols or suits)
@@ -43,11 +43,11 @@ window.onload = function() {
 
 	// Show the intro message box with game instructions and a 'Start' button
 	strMsg = '<h1>Memory Game</h1>';
-	strMsg += '<p>This well-known game tests how good your memory is!</p>';
-	strMsg += '<p>It is played by <strong>clicking on any two cards</strong> to reveal the ';
-	strMsg += '<strong>symbols</strong> underneath them. If the cards <strong>match</strong>, ';
-	strMsg += 'they remain <strong>open</strong>. Otherwise, they are turned face-down again.</p>';
-	strMsg += '<p>You <strong>win the game</strong> by <strong>matching all cards!</strong></p>';
+	strMsg += '<p>This game tests how good your memory is!</p>';
+	strMsg += '<p><strong>Click on any two cards</strong> to <strong>show</strong> them. ';
+	strMsg += 'If they <strong>match</strong>, they stay <strong>open</strong>. ';
+	strMsg += 'Otherwise, they are <strong>hidden</strong> again.</p>';
+	strMsg += '<p>You <strong>win the game</strong> by <strong>matching all the cards!</strong></p>';
 	strMsg += '<h3>Click "Start" to play the game!</h3>';
 	strMsg += '<a href="javascript:hideModalBox(\'start\')" class="button">Start</a> ';
 	strMsg += '<a href="javascript:hideModalBox(\'cancel\')" class="button">Cancel</a>';
